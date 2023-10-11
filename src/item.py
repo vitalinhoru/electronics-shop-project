@@ -76,3 +76,9 @@ class Item:
         """
         number = int(float(str_number.replace(',', '.')))
         return number
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return f'{self.__name}'
