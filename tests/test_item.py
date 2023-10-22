@@ -1,27 +1,8 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 import pytest
-
 from src.item import Item
+from src.phone import Phone
 
-
-# def test_item():
-#     item = Item(name = 'milk', price = 80, quantity = 10)
-#     assert item.name == 'milk'
-#     assert item.price == 80
-#     assert item.quantity == 10
-#
-#
-# def test_calculate_total_price():
-#     item = Item(name = 'milk', price = 80, quantity = 10)
-#     assert item.calculate_total_price() == 800
-#
-#
-# def test_apply_discount():
-#     item = Item(name = 'milk', price = 80, quantity = 10)
-#     assert item.price == 80
-#     Item.pay_rate = 1.5
-#     assert item.apply_discount() is None
-#     assert item.price == 120
 
 @pytest.fixture
 def item() -> Item:
@@ -59,8 +40,18 @@ def test_convert_to_number():
     assert Item.string_to_number('5,0') == 5
     assert Item.string_to_number('5.5') == 5
 
+
 def test_repr(item):
     assert repr(item) == "Item('Смартфон', 1000, 2)"
 
+
 def test_str(item):
     assert str(item) == 'Смартфон'
+
+
+def test_phone_sum(item):
+    phone1 = Phone('Nokia', 50000, 10, 2)
+    phone2 = Phone('Samsung', 70000, 20, 1)
+    assert item + item == 4
+    assert item + phone1 == 12
+    assert phone1 + phone2 == 30
