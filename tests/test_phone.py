@@ -11,6 +11,8 @@ def test_phone():
     item = Item("Samsung", 70000, 20)
     assert item + phone == 30
     assert phone + phone == 20
+    phone1 = Phone('Nokia', 50000, 10, 0)
+    assert phone1.number_of_sim == 0
 
 def test_number_of_sim():
     phone = Phone('Nokia', 50000, 10, 2)
