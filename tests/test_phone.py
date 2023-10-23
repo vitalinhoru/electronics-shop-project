@@ -1,20 +1,27 @@
-from src.item import Item
 from src.phone import Phone
 import pytest
 
 
-def test_phone():
-    phone = Phone('Nokia', 50000, 10, 2)
+@pytest.fixture
+def phone():
+    return Phone('Nokia', 50000, 10, 2)
+
+
+def test_initial(phone):
+    assert phone.name == 'Nokia'
+    assert phone.price == 50000
+    assert phone.quantity == 10
+    assert phone.number_of_sim == 2
     assert repr(phone) == "Phone('Nokia', 50000, 10, 2)"
     assert str(phone) == 'Nokia'
-    assert phone.number_of_sim == 2
-    item = Item("Samsung", 70000, 20)
-    assert item + phone == 30
-    assert phone + phone == 20
-    phone1 = Phone('Nokia', 50000, 10, 0)
-    assert phone1.number_of_sim == 0
 
-def test_number_of_sim():
-    phone = Phone('Nokia', 50000, 10, 2)
+
+def test_add(phone):
+    phone1 = Phone('Samsung', 60000, 20, 1)
+    assert phone + phone1 == 30
+    assert phone + phone == 20
+
+
+def test_number_of_sim(phone):
     with pytest.raises(ValueError):
         phone.number_of_sim = 0
