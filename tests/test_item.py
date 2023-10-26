@@ -55,3 +55,10 @@ def test_phone_sum(item):
     assert item + item == 4
     assert item + phone1 == 12
     assert phone1 + phone2 == 30
+
+
+def test_error(item):
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv(filename='none.txt')
+    # with pytest.raises(KeyError):
+    #     Item.instantiate_from_csv(filename='items.csv')
