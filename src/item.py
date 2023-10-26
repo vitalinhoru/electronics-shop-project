@@ -73,7 +73,7 @@ class Item:
                                     quantity=i['quanity'])
                     #     items = cls(name=i.get('name'), price=i.get('price'), quantity=i.get('quantity'))
                 except KeyError:
-                    raise InstantiateCSVError(filename)
+                    raise InstantiateCSVError(filename=filename)
         else:
             raise FileNotFoundError(f'Отсутствует файл {filename}')
 
@@ -100,3 +100,4 @@ class Item:
 class InstantiateCSVError(Exception):
     def __init__(self, *args, **kwargs):
         self.message = f'Файл {kwargs.get("filename")} поврежден'
+        super().__init__(self.message)
