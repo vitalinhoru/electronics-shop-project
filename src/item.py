@@ -55,19 +55,27 @@ class Item:
             self.__name = name
 
     @classmethod
-    def instantiate_from_csv(cls, filename):
+    def instantiate_from_csv(cls, filename='items.csv'):
         """
         Загружает данные из csv
         """
         Item.all.clear()
         current_dir = os.path.dirname(__file__)  # возвращает имя директории пути path
-        root_dir = os.path.split(current_dir)[0]  # разбивает путь на кортеж (голова, хвост)
-        filepath = os.path.join(root_dir, filename)  # соединяет пути
+        # root_dir = os.path.split(current_dir)[0]  # разбивает путь на кортеж (голова, хвост)
+        filepath = os.path.join(current_dir, filename)  # соединяет пути
         if os.path.isfile(filepath):
             with open(filepath, newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
-                for i in reader:
-                    items = cls(name=i.get('name'), price=i.get('price'), quantity=i.get('quantity'))
+                try:
+                    for i in reader:
+                        items = cls(name=i['name'],
+                                    price=i['price'],
+                                    quantity=i['quanity'])
+                    #     items = cls(name=i.get('name'), price=i.get('price'), quantity=i.get('quantity'))
+                except KeyError:
+                    raise InstantiateCSVError(filename=filename)
+        else:
+            raise FileNotFoundError(f'Отсутствует файл {filename}')
 
     @staticmethod
     def string_to_number(str_number):
@@ -87,3 +95,8 @@ class Item:
         if isinstance(other, Item) or issubclass(other.__class__, self.__class__):
             return self.quantity + other.quantity
         return self.quantity
+
+
+class InstantiateCSVError(Exception):
+    def __init__(self, *args, **kwargs):
+        self.message = f'Файл {kwargs.get("filename")} поврежден'
