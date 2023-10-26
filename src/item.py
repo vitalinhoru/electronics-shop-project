@@ -73,7 +73,7 @@ class Item:
                                     quantity=i['quanity'])
                     #     items = cls(name=i.get('name'), price=i.get('price'), quantity=i.get('quantity'))
                 except KeyError:
-                    raise InstantiateCSVError(filename=filename)
+                    raise InstantiateCSVError(filename)
         else:
             raise FileNotFoundError(f'Отсутствует файл {filename}')
 
